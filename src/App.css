@@ -1,0 +1,162 @@
+.main-display {
+  position: relative;
+}
+
+.scale-container {
+  position: relative;
+}
+
+.scale-border {
+  position: absolute;
+  margin: 22px;
+  padding: 26px 18px;
+  /* border: solid rgb(165, 212, 98) 6px; */
+  /* border-radius: 16px; */
+}
+
+
+.string-holder {
+  display: flex;
+  padding: 0 auto;
+}
+
+.string-note-holder {
+  width: 20px;
+  padding: 0 9px;
+  margin-top: -4px;
+}
+
+.string-note {
+  font-size: 12px;
+  padding: 0 9px;
+  font-weight: 666;
+  /* margin-top: 6.66px; */
+}
+
+.string {
+  float:right;
+  /* margin-top: 5px; */
+}
+
+.fret {
+  position: relative;
+  /* border: solid black 3.2px; */
+  width: 3.42vw;
+  /* margin: 4px auto; */
+  padding: 2.62vh 0;
+  float: left;
+  text-align: center;
+  justify-content: center;
+}
+
+.fret-string {
+  /* position: absolute; */
+  display: block;
+  width: 92%;
+  border: solid black 2px;
+  margin: 0 auto;
+  /* background-color: black; */
+  /* width: 1.62vw; */
+  /* margin: 0 auto;
+  padding: auto; */
+}
+
+.nut {
+  float: left;
+  border: solid black 2px;
+  margin-top: 2.5px;
+  height: 13px;
+}
+
+.dot {
+  display: inline-block;
+  position: absolute;
+  border: solid rgb(165, 212, 98) 13px;
+  border-radius: 20px;
+  margin: 0 auto;
+  margin-top: -16px;
+  margin-left: -32%;
+  /* margin-bottom: 3px; */
+  z-index: 10;
+  cursor: pointer;
+}
+
+.note {
+  display: inline-block;
+  position: absolute;
+  margin: 0 auto;
+  text-align: center;
+  z-index: 20;
+  font-weight: bolder;
+  cursor: pointer;
+}
+
+.two-char-note {
+  margin-top: -11px;
+  margin-left: -23%;
+  font-size: 12px;
+}
+
+.one-char-note {
+  margin-top: -11px;
+  margin-left: -15%;
+  font-size: 12px;
+}
+
+.fret-notch {
+  display: inline-block;
+  position: absolute;
+  border: solid black 2px;
+  background-color: black;
+  right: 0;
+  z-index: 1;
+  height: 105%;
+  width: 1px;
+}
+
+.nut {
+  display: inline-block;
+  position: absolute;
+  border: solid black 2px;
+  background-color: black;
+  left: 0;
+  z-index: 1;
+  height: 123%;
+  width: 1px;
+}
+
+.displayed-note {
+  float: left;
+  padding: 0 6.66px;
+  margin: 5px;
+}
+
+.add-rmv-strings {
+  display: flex;
+}
+
+.add-rmv-string, .tune-up-down {
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.string-adjusters {
+  font-size: 25px;
+}
+
+#scale-options {
+  padding: 22px;
+}
+
+#scale-options * {
+  float: left;
+  margin: 3px;
+  padding: 2px;
+}
+
+#selected-notes-display {
+  position: absolute;
+  align-items: center;
+  font-size: 28px;
+  padding: 0 66.6px;
+}
