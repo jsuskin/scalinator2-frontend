@@ -3,6 +3,8 @@ import String from './String';
 import ScaleOptions from './ScaleOptions';
 import { notes, scales, tunings } from '../constants';
 
+const unique = (value, index, self) => self.indexOf(value) === index;
+
 export default class MainDisplay extends Component {
   state = {
     sharpsOrFlats: 'sharps',
@@ -21,7 +23,10 @@ export default class MainDisplay extends Component {
     } else {
       this.setState({
         selectedFrets: [...this.state.selectedFrets, e.currentTarget.id],
-        selectedScale: [...this.state.selectedScale, e.currentTarget.id]
+        selectedScale: [...this.state.selectedFrets, e.currentTarget.id].map((strFrN) => {
+          const arr = strFrN.split(/\d/);
+          return arr[arr.length - 1];
+        }).filter(unique)
       });
     }
   }
@@ -81,16 +86,15 @@ export default class MainDisplay extends Component {
     })
   }
 
-  handleAddString = () => this.handleAddRmvString(1);
+  handleAddString = () => this.state.tuning.length < 12 ? this.handleAddRmvString(1) : null;
 
-  handleRmvString = () => this.handleAddRmvString(-1);
+  handleRmvString = () => this.state.tuning.length > 4 ? this.handleAddRmvString(-1) : null;
 
   render() {
     const strings = [...Array(this.state.tuning.length).keys()];
     const tuning = notes => notes.map(note => this.props.notes[note]).reverse();
     const currentTuning = tuning(this.state.tuning);
     const selectedFrets = this.state.selectedFrets;
-    const unique = (value, index, self) => self.indexOf(value) === index;
     const selectedNotes = selectedFrets.map(fret => fret.split(/\d+/g)[2]).filter((m,n) => m !== n).filter(unique).sort();
 
     return (
