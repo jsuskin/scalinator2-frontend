@@ -4,15 +4,21 @@ import ScaleOptions from './ScaleOptions';
 import { notes, scales, tunings } from '../constants';
 
 const unique = (value, index, self) => self.indexOf(value) === index;
+const allFrets = [];
 
 export default class MainDisplay extends Component {
   state = {
     sharpsOrFlats: 'sharps',
     stringNoteDisplay: 'sharps',
+    allFrets: [],
     selectedFrets: [],
     selectedScale: [],
     rootNote: 'C',
     tuning: tunings["Standard 6-String"]
+  }
+
+  componentDidMount() {
+    this.setState({ allFrets: [...allFrets] });
   }
 
   handleClick = e => {
@@ -23,10 +29,10 @@ export default class MainDisplay extends Component {
     } else {
       this.setState({
         selectedFrets: [...this.state.selectedFrets, e.currentTarget.id],
-        selectedScale: [...this.state.selectedFrets, e.currentTarget.id].map((strFrN) => {
-          const arr = strFrN.split(/\d/);
+        selectedScale: [...this.state.selectedFrets, e.currentTarget.id].map((fret) => {
+          const arr = fret.split(/\d/);
           return arr[arr.length - 1];
-        }).filter(unique)
+        }).filter(unique).sort()
       });
     }
   }
@@ -53,7 +59,11 @@ export default class MainDisplay extends Component {
 
   handleFillOctaves = () => {
     this.setState({
-      selectedScale: this.state.selectedFrets.map(fret => this.state.rootNote === 'A' ? notes.indexOf(fret.split(/\d+/g)[2]) : [...notes.slice(notes.indexOf(this.state.rootNote)), ...notes.slice(0, notes.indexOf(this.state.rootNote))].indexOf(fret.split(/\d+/g)[2]))
+      selectedFrets: this.state.allFrets.filter(fret => {
+        const arr = fret.split(/\d/);  // ['str', '0', 'fr', '3', 'G']
+        const note = arr[arr.length - 1];  // 'G'
+        return this.state.selectedScale.includes(note);
+      })
     })
   }
 
@@ -89,6 +99,10 @@ export default class MainDisplay extends Component {
   handleAddString = () => this.state.tuning.length < 12 ? this.handleAddRmvString(1) : null;
 
   handleRmvString = () => this.state.tuning.length > 4 ? this.handleAddRmvString(-1) : null;
+
+  addToAllFrets = fret => {
+    allFrets.push(fret)
+  }
 
   render() {
     const strings = [...Array(this.state.tuning.length).keys()];
@@ -138,6 +152,7 @@ export default class MainDisplay extends Component {
                     key={`string-holder-${string}`}
                     sharpsOrFlats={this.state.sharpsOrFlats}
                     tuning={this.state.tuning}
+                    addToAllFrets={this.addToAllFrets}
                   />
                 </div>
               })
