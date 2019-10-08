@@ -80,14 +80,26 @@ export default class MainDisplay extends Component {
 
   handleTuneUp = () => {
     this.setState({
-      tuning: this.state.tuning.map(string => string === 11 ? 0 : ++string)
-    })
+      tuning: this.state.tuning.map(string => string === 11 ? 0 : ++string),
+      selectedFrets: this.state.selectedFrets.map(fret => {
+        let fretNum = fret.split(/\D+/g).filter(n => n !== "")[1]
+        const newNum = +fretNum === 0 ? 23 : --fretNum;
+        const newFret = fret.slice(0, fret.indexOf("fr") + 2) + newNum + fret.split(/\d+/g)[fret.split(/\d+/g).length - 1];
+        return newFret;
+      }).filter(unique)
+    });
   }
 
   handleTuneDown = () => {
     this.setState({
-      tuning: this.state.tuning.map(string => string === 0 ? 11 : --string)
-    })
+      tuning: this.state.tuning.map(string => string === 0 ? 11 : --string),
+      selectedFrets: this.state.selectedFrets.map(fret => {
+        let fretNum = fret.split(/\D+/g).filter(n => n !== "")[1]
+        const newNum = +fretNum === 24 ? 1 : ++fretNum;
+        const newFret = fret.slice(0, fret.indexOf("fr") + 2) + newNum + fret.split(/\d+/g)[fret.split(/\d+/g).length - 1];
+        return newFret;
+      }).filter(unique)
+    });
   }
 
   handleAddRmvString = (sign) => {

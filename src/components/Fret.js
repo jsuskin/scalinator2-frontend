@@ -5,7 +5,6 @@ import { notes } from '../constants';
 let thisFret = '';
 
 export default class Fret extends React.Component {
-
   render() {
     const string = this.props.string;
     const fret = this.props.fret;
